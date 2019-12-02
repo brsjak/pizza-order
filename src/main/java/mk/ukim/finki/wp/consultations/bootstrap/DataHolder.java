@@ -4,6 +4,8 @@ package mk.ukim.finki.wp.consultations.bootstrap;
 import lombok.Getter;
 import mk.ukim.finki.wp.consultations.model.Ingredient;
 import mk.ukim.finki.wp.consultations.model.Pizza;
+import mk.ukim.finki.wp.consultations.repository.jpa.JpaIngredientRepository;
+import mk.ukim.finki.wp.consultations.repository.jpa.JpaPizzaRepository;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +18,13 @@ import java.util.List;
 public class DataHolder {
     public static final List<Pizza> pizzas = new ArrayList<>();
     public static final List<Ingredient> ingredients = new ArrayList<>();
+    private final JpaPizzaRepository jpaPizzaRepository;
+    private final JpaIngredientRepository jpaIngredientRepository;
+
+    public DataHolder(JpaPizzaRepository jpaPizzaRepository, JpaIngredientRepository jpaIngredientRepository) {
+        this.jpaPizzaRepository = jpaPizzaRepository;
+        this.jpaIngredientRepository = jpaIngredientRepository;
+    }
 
     @PostConstruct
     public void init(){
@@ -56,6 +65,8 @@ public class DataHolder {
         pizzas.add(new Pizza("Pepperoni",new ArrayList<Ingredient>(Arrays.asList(ingredients.get(0),ingredients.get(2),ingredients.get(15))),true));
         pizzas.add(new Pizza("Quattro Formaggi",new ArrayList<Ingredient>(Arrays.asList(ingredients.get(7),ingredients.get(22),ingredients.get(19),ingredients.get(20))),false));
 
+        this.jpaPizzaRepository.saveAll(pizzas);
+        this.jpaIngredientRepository.saveAll(ingredients);
 
     }
 
