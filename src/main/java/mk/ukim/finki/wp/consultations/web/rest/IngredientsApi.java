@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collector;
@@ -30,9 +31,13 @@ public class IngredientsApi {
         this.pizzaService = pizzaService;
     }
 
-    @GetMapping()
+
+    // Return all the ingredients in alphabetic order
+    @GetMapping
     public List<Ingredient> getAll(){
-        return ingredientsService.getAllIngredients();
+        return ingredientsService.getAllIngredients().stream()
+                .sorted(Comparator.comparing(Ingredient::getName))
+                .collect(Collectors.toList());
     }
 
     @PostMapping
