@@ -2,6 +2,7 @@ package mk.ukim.finki.wp.consultations.web.rest;
 
 
 import mk.ukim.finki.wp.consultations.exceptions.InvalidIngredientException;
+import mk.ukim.finki.wp.consultations.exceptions.LimitExceededIngredientsException;
 import mk.ukim.finki.wp.consultations.model.Ingredient;
 import mk.ukim.finki.wp.consultations.model.Pizza;
 import mk.ukim.finki.wp.consultations.service.IngredientsService;
@@ -53,9 +54,15 @@ public class IngredientsApi {
     }
 
     // Return all the ingredients that have spicy property
+    // Addition: Limit the spicy ingredients to 3
     @GetMapping
     public List<Ingredient> getSpicyIngredients(@RequestParam boolean spicy){
-        return this.ingredientsService.getAllIngredients().stream().filter(i -> i.isVeggie() == spicy).collect(Collectors.toList());
+        List<Ingredient> ingredients = this.ingredientsService.getAllIngredients().stream().filter(i -> i.isVeggie() == spicy).collect(Collectors.toList());
+        if(ingredients.size() > 3){
+            throw new LimitExceededIngredientsException();
+        }else{
+            return ingredients;
+        }
     }
 
     // Return all the pizzas that have the particular ingredient
