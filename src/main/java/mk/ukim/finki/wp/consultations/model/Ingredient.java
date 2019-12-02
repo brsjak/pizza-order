@@ -2,7 +2,9 @@ package mk.ukim.finki.wp.consultations.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name="ingredients")
@@ -15,6 +17,9 @@ public class Ingredient {
     private float amount;
 
     private boolean veggie;
+
+    @ManyToMany(mappedBy = "ingredients")
+    private List<Pizza> pizzas;
 
     public String getName() {
         return name;

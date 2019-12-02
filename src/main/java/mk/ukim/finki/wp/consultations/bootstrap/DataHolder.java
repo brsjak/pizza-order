@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.consultations.bootstrap;
 
 
+import lombok.Getter;
 import mk.ukim.finki.wp.consultations.model.Pizza;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Getter
 public class DataHolder {
     public static final List<Pizza> pizzas = new ArrayList<>();
+
 
     @PostConstruct
     public void init(){
@@ -25,6 +28,8 @@ public class DataHolder {
         pizzas.add(new Pizza("Pepperoni","(tomato sauce, mozzarella, sausage)"));
         pizzas.add(new Pizza("Quattro Formaggi","(Taleggio, Mascarpone, Gorgonzola, Parmesan)"));
 
+
     }
+
 
 }
