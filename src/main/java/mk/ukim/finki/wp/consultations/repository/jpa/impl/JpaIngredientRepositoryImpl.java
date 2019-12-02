@@ -1,7 +1,8 @@
-package mk.ukim.finki.wp.consultations.repository.jpa;
+package mk.ukim.finki.wp.consultations.repository.jpa.impl;
 
 import mk.ukim.finki.wp.consultations.model.Ingredient;
 import mk.ukim.finki.wp.consultations.repository.IngredientRepository;
+import mk.ukim.finki.wp.consultations.repository.jpa.JpaIngredientRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
