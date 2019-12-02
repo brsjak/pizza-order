@@ -21,6 +21,13 @@ public class Ingredient {
     @ManyToMany(mappedBy = "ingredients")
     private List<Pizza> pizzas;
 
+    public Ingredient(String name, boolean spicy, float amount, boolean veggie) {
+        this.name = name;
+        this.spicy = spicy;
+        this.amount = amount;
+        this.veggie = veggie;
+    }
+
     public String getName() {
         return name;
     }

@@ -19,18 +19,15 @@ public class Pizza {
     @Id
     private String name;
 
-    private String description;
-
     @ManyToMany
     private List<Ingredient> ingredients;
 
     private boolean veggie;
 
-    public Pizza(String name, String desc) {
+    public Pizza(String name,List<Ingredient> ingredients,boolean veggie) {
         this.name = name;
-        this.description = desc;
-        this.ingredients = new ArrayList<>();
-        this.veggie = false;
+        this.ingredients = ingredients;
+        this.veggie = veggie;
     }
 
     public List<Ingredient> getIngredients() {
@@ -57,11 +54,4 @@ public class Pizza {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
