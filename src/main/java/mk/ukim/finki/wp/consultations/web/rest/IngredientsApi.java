@@ -1,8 +1,12 @@
 package mk.ukim.finki.wp.consultations.web.rest;
 
 
+import mk.ukim.finki.wp.consultations.exceptions.InvalidIngredientException;
 import mk.ukim.finki.wp.consultations.model.Ingredient;
+import mk.ukim.finki.wp.consultations.model.Pizza;
 import mk.ukim.finki.wp.consultations.service.IngredientsService;
+import mk.ukim.finki.wp.consultations.service.PizzaService;
+import mk.ukim.finki.wp.consultations.service.impl.PizzaServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -10,14 +14,19 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/ingredients")
 public class IngredientsApi {
     private final IngredientsService ingredientsService;
+    private final PizzaService pizzaService;
 
-    public IngredientsApi(IngredientsService ingredientsService) {
+    public IngredientsApi(IngredientsService ingredientsService,PizzaService pizzaService) {
         this.ingredientsService = ingredientsService;
+        this.pizzaService = pizzaService;
     }
 
     @GetMapping()
@@ -41,6 +50,19 @@ public class IngredientsApi {
     @GetMapping("/{id}")
     public Optional<Ingredient> getIngredient(@PathVariable String name){
         return this.ingredientsService.getIngredient(name);
+    }
+
+    // Return all the ingredients that have spicy property
+    @GetMapping
+    public List<Ingredient> getSpicyIngredients(@RequestParam boolean spicy){
+        return this.ingredientsService.getAllIngredients().stream().filter(i -> i.isVeggie() == spicy).collect(Collectors.toList());
+    }
+
+    // Return all the pizzas that have the particular ingredient
+    @GetMapping("/{id}/pizzas")
+    public List<Pizza> getPizzasWithIngredient(@PathVariable String name){
+        Ingredient ingredient = this.ingredientsService.getIngredient(name).orElseThrow(InvalidIngredientException::new);
+        return this.pizzaService.getAllPizzas().stream().filter(p -> p.getIngredients().contains(ingredient)).collect(Collectors.toList());
     }
 
     @DeleteMapping("/{id}")
