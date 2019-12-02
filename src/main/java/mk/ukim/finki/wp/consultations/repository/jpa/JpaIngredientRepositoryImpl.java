@@ -5,6 +5,7 @@ import mk.ukim.finki.wp.consultations.repository.IngredientRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -19,4 +20,20 @@ public class JpaIngredientRepositoryImpl implements IngredientRepository {
     public List<Ingredient> listIngredients() {
         return jpaIngredientRepository.findAll();
     }
+
+    @Override
+    public Ingredient save(Ingredient ingredient) {
+        return jpaIngredientRepository.save(ingredient);
+    }
+
+    @Override
+    public Optional<Ingredient> getIngredient(String name) {
+        return jpaIngredientRepository.findById(name);
+    }
+
+    @Override
+    public void deleteIngredient(String name) {
+        jpaIngredientRepository.deleteById(name);
+    }
+
 }

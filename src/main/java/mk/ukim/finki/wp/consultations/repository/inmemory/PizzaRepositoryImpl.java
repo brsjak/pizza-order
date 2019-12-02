@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//@Profile("in-memory-repo")
+@Profile("in-memory-repo")
 @Repository
 public class PizzaRepositoryImpl implements PizzaRepository {
     @Override
