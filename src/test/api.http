@@ -1,0 +1,81 @@
+GET http://localhost:8080/api/pizzas
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+
+###
+GET http://localhost:8080/api/pizzas/Margherita
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+
+
+###
+POST http://localhost:8080/api/pizzas
+name: Margherita
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 400, "Response status is not 400");
+});
+%}
+
+
+
+###
+POST http://localhost:8080/api/pizzas
+name: Napolitanna
+Content-Type: application/x-www-form-urlencoded
+
+list?ingredients[0].name=tomato sauce&ingredients[0].spicy=true&ingredients[0].amount=100&ingredients[0].veggie=true
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201");
+  client.assert(response.headers.valueOf("Location")!= null, "Invalid Location");
+  client.assert(response.body.hasOwnProperty("id"), 'Can not find the slotId');
+  client.global.set("newPizzaUrl", response.headers.valueOf("Location"));
+  client.global.set("name", response.body["name"]);
+});
+%}
+
+
+
+###
+PATCH http://localhost:8080/api/pizzas/{{id}}
+name: Calzone
+Content-Type: application/x-www-form-urlencoded
+
+veggie=true
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 201");
+  client.assert(response.body.hasOwnProperty("id"), 'Can not find the slotId');
+});
+%}
+
+
+###
+DELETE {{id}}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+
+
+
+
+
