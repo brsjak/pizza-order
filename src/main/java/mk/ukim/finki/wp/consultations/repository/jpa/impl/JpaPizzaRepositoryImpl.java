@@ -4,6 +4,8 @@ import mk.ukim.finki.wp.consultations.model.Ingredient;
 import mk.ukim.finki.wp.consultations.model.Pizza;
 import mk.ukim.finki.wp.consultations.repository.PizzaRepository;
 import mk.ukim.finki.wp.consultations.repository.jpa.JpaPizzaRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,12 +26,6 @@ public class JpaPizzaRepositoryImpl implements PizzaRepository {
 
     @Override
     public Pizza savePizza(Pizza pizza) {
-        return jpaPizzaRepository.save(pizza);
-    }
-
-    @Override
-    public Pizza savePizza(String name, List<Ingredient> ingredients, boolean veggie) {
-        Pizza pizza = new Pizza(name,ingredients,veggie);
         return jpaPizzaRepository.save(pizza);
     }
 

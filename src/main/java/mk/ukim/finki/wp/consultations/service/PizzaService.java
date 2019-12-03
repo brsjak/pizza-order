@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface PizzaService {
     List<Pizza> getAllPizzas();
-    Pizza addPizza(String name, List<Ingredient> ingredients,boolean veggie);
     Pizza addPizza(Pizza pizza);
     Optional<Pizza> getPizza(String name);
     void deletePizza(String name);

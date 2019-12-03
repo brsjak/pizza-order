@@ -2,6 +2,7 @@ package mk.ukim.finki.wp.consultations.service.impl;
 
 import mk.ukim.finki.wp.consultations.exceptions.InvalidIngredientException;
 import mk.ukim.finki.wp.consultations.model.Ingredient;
+import mk.ukim.finki.wp.consultations.model.Pizza;
 import mk.ukim.finki.wp.consultations.repository.IngredientRepository;
 import mk.ukim.finki.wp.consultations.service.IngredientsService;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,8 @@ public class IngredientsServiceImpl implements IngredientsService {
     }
 
     @Override
-    public Ingredient addIngredient(String name, boolean spicy, float amount, boolean veggie) {
-        Ingredient ingredient = new Ingredient(name,spicy,amount,veggie);
+    public Ingredient addIngredient(String name, boolean spicy, float amount, boolean veggie, List<Pizza> pizzas) {
+        Ingredient ingredient = new Ingredient(name,spicy,amount,veggie,pizzas);
         return ingredientRepository.save(ingredient);
     }
 

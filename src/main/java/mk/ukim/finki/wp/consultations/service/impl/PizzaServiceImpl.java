@@ -4,6 +4,7 @@ import mk.ukim.finki.wp.consultations.model.Ingredient;
 import mk.ukim.finki.wp.consultations.model.Pizza;
 import mk.ukim.finki.wp.consultations.repository.PizzaRepository;
 import mk.ukim.finki.wp.consultations.service.PizzaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,6 @@ public class PizzaServiceImpl implements PizzaService {
     @Override
     public List<Pizza> getAllPizzas() {
         return pizzaRepository.listPizzas();
-    }
-
-    @Override
-    public Pizza addPizza(String name, List<Ingredient> ingredients, boolean veggie) {
-        return pizzaRepository.savePizza(name,ingredients,veggie);
     }
 
     @Override

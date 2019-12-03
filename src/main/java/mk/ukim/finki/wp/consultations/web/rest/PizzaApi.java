@@ -32,11 +32,11 @@ public class PizzaApi {
 
     @PostMapping
     public Pizza createPizza(@RequestParam String name,
-                             @RequestParam List<Ingredient> ingredients,
+                             @RequestParam("ingredients") ArrayList<Ingredient> list,
                              @RequestParam boolean veggie,
                              HttpServletResponse response,
                              UriComponentsBuilder builder){
-        Pizza result = new Pizza(name,ingredients,veggie);
+        Pizza result = new Pizza(name,list,veggie);
         response.setHeader("Location", String.valueOf(builder.path("/api/pizzas/{id}").buildAndExpand(builder.toUriString())));
         return result;
     }
@@ -55,7 +55,7 @@ public class PizzaApi {
     // Put method in background deletes the current object and creates a new one with the given parameters
     @PutMapping("/{id}")
     public Pizza editPizza(@RequestParam String name,
-                           @RequestParam List<Ingredient> ingredients,
+                           @RequestParam ArrayList<Ingredient> ingredients,
                            @RequestParam boolean veggie){
         Pizza oldPizza = this.pizzaService.getPizza(name).orElseThrow(InvalidPizzaException::new);
         Pizza newPizza = new Pizza(name,ingredients,veggie);
