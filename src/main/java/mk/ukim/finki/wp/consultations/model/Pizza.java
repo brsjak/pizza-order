@@ -4,30 +4,32 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @NoArgsConstructor
 @Data
-@Entity
 @Table(name="pizzas")
 public class Pizza {
     @Id
     private String name;
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
     private List<Ingredient> ingredients;
 
     private boolean veggie;
 
-    public Pizza(String name,List<Ingredient> ingredients,boolean veggie) {
+    public Pizza(String name, List<Ingredient> ingredients, boolean veggie) {
         this.name = name;
         this.ingredients = ingredients;
         this.veggie = veggie;
+    }
+
+    public void addIngredients(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
+        ingredient.getPizzas().add(this);
     }
 
     public List<Ingredient> getIngredients() {
