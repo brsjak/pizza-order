@@ -49,7 +49,7 @@ public class IngredientsApi {
                                        HttpServletResponse response,
                                        UriComponentsBuilder builder){
         Ingredient result = this.ingredientsService.addIngredient(name,spicy,amount,veggie);
-        response.setHeader("Ingredient", String.valueOf(builder.path("/api/ingredients/{id}").buildAndExpand(builder.toUriString())));
+        response.setHeader("Location", String.valueOf(builder.path("/api/ingredients/{id}").buildAndExpand(builder.toUriString())));
         return result;
     }
 
