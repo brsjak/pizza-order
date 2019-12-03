@@ -1,5 +1,9 @@
 package mk.ukim.finki.wp.consultations.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -7,6 +11,8 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@Data
 @Table(name="ingredients")
 public class Ingredient {
     @Id
@@ -21,11 +27,21 @@ public class Ingredient {
     @ManyToMany(mappedBy = "ingredients")
     private List<Pizza> pizzas;
 
-    public Ingredient(String name, boolean spicy, float amount, boolean veggie) {
+    public List<Pizza> getPizzas() {
+        return pizzas;
+    }
+
+    public Ingredient(String name, boolean spicy, float amount, boolean veggie, List<Pizza> pizzas) {
         this.name = name;
         this.spicy = spicy;
         this.amount = amount;
         this.veggie = veggie;
+        this.pizzas = pizzas;
+    }
+
+
+    public void setPizzas(List<Pizza> pizzas) {
+        this.pizzas = pizzas;
     }
 
     public String getName() {

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +49,7 @@ public class IngredientsApi {
                                        @RequestParam("veggie") boolean veggie,
                                        HttpServletResponse response,
                                        UriComponentsBuilder builder){
-        Ingredient result = this.ingredientsService.addIngredient(name,spicy,amount,veggie);
+        Ingredient result = this.ingredientsService.addIngredient(name,spicy,amount,veggie,new ArrayList<>());
         response.setHeader("Location", String.valueOf(builder.path("/api/ingredients/{id}").buildAndExpand(builder.toUriString())));
         return result;
     }
